@@ -1,40 +1,46 @@
 import { createApp } from "vue";
 import { createWebHistory, createRouter } from "vue-router";
 
-// styles
-
+// Styles
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "@/assets/styles/tailwind.css";
 
-// mouting point for the whole app
-
+// Mounting point for the whole app
 import App from "@/App.vue";
 
-// layouts
-
+// Layouts
 import Admin from "@/layouts/Admin.vue";
 import Auth from "@/layouts/Auth.vue";
 
-// views for Admin layout
-
+// Views for Admin layout
 import Dashboard from "@/views/admin/Dashboard.vue";
 import Settings from "@/views/admin/Settings.vue";
 import Tables from "@/views/admin/Tables.vue";
 import Maps from "@/views/admin/Maps.vue";
 
-// views for Auth layout
-
+// Views for Auth layout
 import Login from "@/views/auth/Login.vue";
 import Register from "@/views/auth/Register.vue";
 
-// views without layouts
-
+// Views without layouts
 import Landing from "@/views/Landing.vue";
 import Profile from "@/views/Profile.vue";
-// import Index from "@/views/Index.vue";
 
-// routes
+// Services
+import authService from '@/services/api-admin-service';
 
+// Check token
+const token = localStorage.getItem('token');
+const tokenExpiry = localStorage.getItem('tokenExpiry');
+
+if (!token || (tokenExpiry && Date.now() > tokenExpiry)) {
+  // Token không tồn tại hoặc đã hết hạn
+  if (window.location.pathname !== '/auth/login') {
+    authService.logout();
+  }
+}
+
+// Routes
 const routes = [
   {
     path: "/admin",
@@ -89,9 +95,11 @@ const routes = [
   { path: "/:pathMatch(.*)*", redirect: "/" },
 ];
 
+// Create router
 const router = createRouter({
   history: createWebHistory(),
   routes,
 });
 
+// Mount the app
 createApp(App).use(router).mount("#app");

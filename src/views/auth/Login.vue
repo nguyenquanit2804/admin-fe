@@ -33,18 +33,20 @@
             <div class="text-blueGray-400 text-center mb-3 font-bold">
               <small>Or sign in with credentials</small>
             </div>
-            <form>
+            <form @submit.prevent="handleLogin">
               <div class="relative w-full mb-3">
                 <label
                   class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                   htmlFor="grid-password"
                 >
-                  Email
+                  Username/Email
                 </label>
                 <input
-                  type="email"
+                  type="text"
+                  id="user"
+                  v-model="loginForm.user"
                   class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  placeholder="Email"
+                  placeholder="Username/Email"
                 />
               </div>
 
@@ -57,6 +59,8 @@
                 </label>
                 <input
                   type="password"
+                  id="password"
+                  v-model="loginForm.password"
                   class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   placeholder="Password"
                 />
@@ -77,12 +81,13 @@
               <div class="text-center mt-6">
                 <button
                   class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-                  type="button"
+                  type="submit"
                 >
                   Sign In
                 </button>
               </div>
             </form>
+            <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
           </div>
         </div>
         <div class="flex flex-wrap mt-6 relative">
@@ -104,13 +109,41 @@
 <script>
 import github from "@/assets/img/github.svg";
 import google from "@/assets/img/google.svg";
+import AdminService from "@/services/api-admin-service"
+
 
 export default {
   data() {
     return {
       github,
       google,
+      loginForm: {
+      user: '',
+      password: '',
+    },
+    errorMessage: '',
     };
+  },
+  methods: {
+    async handleLogin() {
+      try {
+        const response = await AdminService.login(this.loginForm);
+
+        // Xử lý phản hồi từ API
+        if (response.data.accessToken) {
+          // Lưu token vào localStorage hoặc Vuex store
+          localStorage.setItem('token', response.data.accessToken);
+          this.$router.push('/dashboard'); // Chuyển hướng đến trang dashboard
+        }
+      } catch (error) {
+        // Xử lý lỗi
+        if (error.response && error.response.status === 401) {
+          this.errorMessage = 'Invalid username or password';
+        } else {
+          this.errorMessage = 'An error occurred. Please try again later.';
+        }
+      }
+    },
   },
 };
 </script>
