@@ -128,11 +128,12 @@ export default {
     async handleLogin() {
       try {
         const response = await AdminService.login(this.loginForm);
-
-        // Xử lý phản hồi từ API
-        if (response.data.accessToken) {
+        console.log(process.env.VUE_APP_API_URL);
+        console.log("response:", response.token);
+        // Xử lý phản hồi từ API    
+        if (response.token) {
           // Lưu token vào localStorage hoặc Vuex store
-          localStorage.setItem('token', response.data.accessToken);
+          localStorage.setItem('token', response.token);
           this.$router.push('/dashboard'); // Chuyển hướng đến trang dashboard
         }
       } catch (error) {

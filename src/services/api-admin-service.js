@@ -1,14 +1,8 @@
-import axios from 'axios';
-const apiAdminService = axios.create({
-  baseURL: 'http://localhost:8080/api/auth',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
+import api from '@/services/api-base'; 
 
 // Thêm interceptor để xử lý phản hồi
-apiAdminService.interceptors.response.use(
-  (response) => {
+        api.interceptors.response.use(
+        (response) => {
     return response;
   },
   (error) => {
@@ -26,10 +20,18 @@ apiAdminService.interceptors.response.use(
 
 export default {
     testConnectToBackend() {
-      return apiAdminService.post('/test');
+      return api.post('/test');
     },
-    login(credentials) {
-      return apiAdminService.post('/login', credentials);
+    async login(credentials) {
+      try {
+        const result = await api.post("/api/auth/login", credentials);
+        // Xử lý kết quả nếu cần
+        return result;
+      } catch (error) {
+        // Xử lý lỗi nếu cần
+        console.error("Lỗi khi đăng nhập:", error);
+        throw error;
+      }
     },
     logout() {
       localStorage.removeItem('token');

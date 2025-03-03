@@ -146,7 +146,6 @@ export default {
     async fetchDataFromTest() {
       try {
         const response = await AdminService.testConnectToBackend();
-        console.log("Test nen chi de string thoi",response)
         this.message = response.data;
       } catch (error) {
         this.message = 'Failed to fetch data from Microservice ';
