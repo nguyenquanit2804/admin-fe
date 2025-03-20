@@ -106,7 +106,7 @@
 
           <li class="items-center">
             <router-link
-              to="/admin/settings"
+              to="/admin/create"
               v-slot="{ href, navigate, isActive }"
             >
               <a
@@ -120,10 +120,10 @@
                 ]"
               >
                 <i
-                  class="fas fa-tools mr-2 text-sm"
+                  class="fa fa-user mr-2 text-sm"
                   :class="[isActive ? 'opacity-75' : 'text-blueGray-300']"
                 ></i>
-                Settings
+                Create
               </a>
             </router-link>
           </li>

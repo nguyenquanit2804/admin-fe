@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Tạo instance của Axios
 const api = axios.create({
-  baseURL: "http://localhost:8080", // Đổi thành API của bạn
+  baseURL: "http://localhost:10000", // Đổi thành API của bạn
   headers: {
     "Content-Type": "application/json",
   },
