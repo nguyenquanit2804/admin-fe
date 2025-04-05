@@ -12,8 +12,11 @@ const api = axios.create({
 api.interceptors.response.use(
   (response) => {
     // Kiểm tra nếu status === 200 thì trả về data trực tiếp
-    if (response.status === 200) {
-      return response.data.data;
+    if (response.data.status === 200) {
+      return response.data;
+    }
+    if (response.data.status === 400) {
+      return response;
     }
     // Nếu status khác 200, trả về response gốc để dễ debug
     return Promise.reject(response);

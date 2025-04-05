@@ -30,26 +30,14 @@
         href="javascript:void(0);"
         class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
       >
-        Action
+        Profile
       </a>
       <a
         href="javascript:void(0);"
         class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
+        @click="logoutSystemAdmin"
       >
-        Another action
-      </a>
-      <a
-        href="javascript:void(0);"
-        class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-      >
-        Something else here
-      </a>
-      <div class="h-0 my-2 border border-solid border-blueGray-100" />
-      <a
-        href="javascript:void(0);"
-        class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-      >
-        Seprated link
+        Logout
       </a>
     </div>
   </div>
@@ -57,6 +45,7 @@
 
 <script>
 import { createPopper } from "@popperjs/core";
+import AdminService from "@/services/api-admin-service";
 
 import image from "@/assets/img/team-1-800x800.jpg";
 
@@ -68,6 +57,12 @@ export default {
     };
   },
   methods: {
+    async logoutSystemAdmin() {
+      // Đăng xuất và thực hiện các hành động cần thiết sau khi logout
+      await AdminService.logout();
+      // Ví dụ: Chuyển hướng đến trang đăng nhập sau khi đăng xuất
+      this.$router.push({ name: "Login" }); // Nếu bạn sử dụng vue-router
+    },
     toggleDropdown: function (event) {
       event.preventDefault();
       if (this.dropdownPopoverShow) {

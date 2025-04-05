@@ -128,8 +128,6 @@ export default {
     async handleLogin() {
       try {
         const response = await AdminService.login(this.loginForm);
-        console.log(process.env.VUE_APP_API_URL);
-        console.log("response:", response.token);
         // Xử lý phản hồi từ API    
         if (response.token) {
           // Lưu token vào localStorage hoặc Vuex store

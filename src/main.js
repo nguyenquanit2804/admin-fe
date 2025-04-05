@@ -14,18 +14,14 @@ import Auth from "@/layouts/Auth.vue";
 
 // Views for Admin layout
 import Dashboard from "@/views/admin/Dashboard.vue";
+import Search from "@/views/admin/Search.vue";
 import CreatePartner from "@/views/admin/CreatePartner.vue";
-import Tables from "@/views/admin/Tables.vue";
-import Maps from "@/views/admin/Maps.vue";
 
 // Views for Auth layout
 import Login from "@/views/auth/Login.vue";
 import Register from "@/views/auth/Register.vue";
 
 // Views without layouts
-import Landing from "@/views/Landing.vue";
-import Profile from "@/views/Profile.vue";
-
 // Services
 import authService from '@/services/api-admin-service';
 
@@ -52,16 +48,12 @@ const routes = [
         component: Dashboard,
       },
       {
+        path: "/admin/search",
+        component: Search,
+      },
+      {
         path: "/admin/create",
         component: CreatePartner,
-      },
-      {
-        path: "/admin/tables",
-        component: Tables,
-      },
-      {
-        path: "/admin/maps",
-        component: Maps,
       },
     ],
   },
@@ -80,14 +72,7 @@ const routes = [
       },
     ],
   },
-  {
-    path: "/landing",
-    component: Landing,
-  },
-  {
-    path: "/profile",
-    component: Profile,
-  },
+
   {
     path: "/",
     redirect: "/admin/dashboard",
